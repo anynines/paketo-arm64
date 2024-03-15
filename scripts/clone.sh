@@ -27,14 +27,16 @@ rm -rf "${WORK:?}/"*
 git clone "https://github.com/$BPID" "$WORK/$BPID"
 pushd "$WORK/$BPID" >/dev/null
 git -c "advice.detachedHead=false" checkout "v$BPVER"
-popd
+popd >/dev/null
 
 for GROUP in $(yj -t < "$WORK/$BPID/buildpack.toml" | jq -rc '.order[].group[]'); do
-	BUILDPACK=$(echo "$GROUP" | jq -r ".id")
-	VERSION=$(echo "$GROUP" | jq -r ".version")
-	git clone "https://github.com/$BUILDPACK" "$WORK/$BUILDPACK"
-	pushd "$WORK/$BUILDPACK" >/dev/null
+	export BUILDPACK=$(echo "$GROUP" | jq -r ".id")
+	export VERSION=$(echo "$GROUP" | jq -r ".version")
+	export CNB_DIRECTORY="$(echo "$BUILDPACK" | tr '/' '_')/${VERSION}"
+	if [[ -d "${WORK}/${CNB_DIRECTORY}" ]]; then continue; fi
+	mkdir -p "${WORK}/${CNB_DIRECTORY}"
+	git clone "https://github.com/$BUILDPACK" "${WORK}/${CNB_DIRECTORY}"
+	pushd "${WORK}/${CNB_DIRECTORY}" >/dev/null
 	git -c "advice.detachedHead=false" checkout "v$VERSION"
-	popd
+	popd >/dev/null
 done
-

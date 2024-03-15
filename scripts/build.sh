@@ -22,12 +22,17 @@ if [ -z "$WORK" ] && ! [ -d "$WORK" ]; then
 fi
 
 for GROUP in $(yj -t < "$WORK/$BPID/buildpack.toml" | jq -rc '.order[].group[]'); do
-	BUILDPACK=$(echo "$GROUP" | jq -r ".id")
-	VERSION=$(echo "$GROUP" | jq -r ".version")
+	export BUILDPACK=$(echo "$GROUP" | jq -r ".id")
+	export VERSION=$(echo "$GROUP" | jq -r ".version")
+	export SYMLINK=$(echo "$BUILDPACK-arm64" | tr '/' '_')
 	pushd "$WORK/$BUILDPACK" >/dev/null
 		create-package --destination ./out --version "$VERSION"
 		pushd ./out >/dev/null
-			sudo --preserve-env=PATH pack buildpack package "$BUILDPACK-arm64:$VERSION"
-		popd
-	popd
+			yj -ty < buildpack.toml | yq '.buildpack.version = env(VERSION)' | yj -yt > buildpack.toml.temp
+			mv buildpack.toml.temp buildpack.toml
+			pack buildpack package "$BUILDPACK-arm64:$VERSION"
+		popd >/dev/null
+	popd >/dev/null
+	pushd "$WORK" >/dev/null
+	popd >/dev/null
 done

@@ -1,0 +1,74 @@
+api = "0.7"
+
+[buildpack]
+  description = "A buildpack for installing the appropriate Go compiler distribution version"
+  homepage = "https://github.com/paketo-buildpacks/go-dist"
+  id = "paketo-buildpacks/go-dist-arm64"
+  keywords = ["go", "distribution", "compiler"]
+  name = "Paketo Buildpack for Go Distribution"
+  sbom-formats = ["application/vnd.cyclonedx+json", "application/spdx+json", "application/vnd.syft+json"]
+
+  [[buildpack.licenses]]
+    type = "Apache-2.0"
+    uri = "https://github.com/paketo-buildpacks/go-dist/blob/main/LICENSE"
+
+[metadata]
+  include-files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml"]
+  pre-package = "./scripts/build.sh"
+  [metadata.default-versions]
+    go = "1.22.*"
+
+  [[metadata.dependencies]]
+    checksum = "sha256:e2e8aa88e1b5170a0d495d7d9c766af2b2b6c6925a8f8956d834ad6b4cacbd9a"
+    cpe = "cpe:2.3:a:golang:go:1.21.6:*:*:*:*:*:*:*"
+    id = "go"
+    licenses = ["BSD-3-Clause"]
+    name = "Go"
+    purl = "pkg:generic/go@go1.21.6?checksum=e2e8aa88e1b5170a0d495d7d9c766af2b2b6c6925a8f8956d834ad6b4cacbd9a&download_url=https://go.dev/dl/go1.21.6.linux-arm64.tar.gz"
+    source = "https://go.dev/dl/go1.21.6.src.tar.gz"
+    source-checksum = "sha256:124926a62e45f78daabbaedb9c011d97633186a33c238ffc1e25320c02046248"
+    stacks = ["*"]
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.21.6.linux-arm64.tar.gz"
+    version = "1.21.6"
+
+  [[metadata.dependencies]]
+    checksum = "sha256:a9bc1ccedbfde059f25b3a2ad81ae4cdf21192ae207dfd3ccbbfe99c3749e233"
+    cpe = "cpe:2.3:a:golang:go:1.21.7:*:*:*:*:*:*:*"
+    id = "go"
+    licenses = ["BSD-3-Clause"]
+    name = "Go"
+    purl = "pkg:generic/go@go1.21.7?checksum=a9bc1ccedbfde059f25b3a2ad81ae4cdf21192ae207dfd3ccbbfe99c3749e233&download_url=https://go.dev/dl/go1.21.7.linux-arm64.tar.gz"
+    source = "https://go.dev/dl/go1.21.7.src.tar.gz"
+    source-checksum = "sha256:00197ab20f33813832bff62fd93cca1c42a08cc689a32a6672ca49591959bff6"
+    stacks = ["*"]
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.21.7.linux-arm64.tar.gz"
+    version = "1.21.7"
+
+  [[metadata.dependencies]]
+    checksum = "sha256:6a63fef0e050146f275bf02a0896badfe77c11b6f05499bb647e7bd613a45a10"
+    cpe = "cpe:2.3:a:golang:go:1.22.0:*:*:*:*:*:*:*"
+    id = "go"
+    licenses = ["BSD-3-Clause"]
+    name = "Go"
+    purl = "pkg:generic/go@go1.22.0?checksum=6a63fef0e050146f275bf02a0896badfe77c11b6f05499bb647e7bd613a45a10&download_url=https://go.dev/dl/go1.22.0.linux-arm64.tar.gz"
+    source = "https://go.dev/dl/go1.22.0.src.tar.gz"
+    source-checksum = "sha256:4d196c3d41a0d6c1dfc64d04e3cc1f608b0c436bd87b7060ce3e23234e1f4d5c"
+    stacks = ["*"]
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.22.0.linux-arm64.tar.gz"
+    version = "1.22.0"
+
+  [[metadata.dependency-constraints]]
+    constraint = "1.21.*"
+    id = "go"
+    patches = 2
+
+  [[metadata.dependency-constraints]]
+    constraint = "1.22.*"
+    id = "go"
+    patches = 2
+
+[[stacks]]
+  id = "*"
