@@ -3,7 +3,7 @@ api = "0.7"
 [buildpack]
   description = "A buildpack for installing the appropriate Go compiler distribution version"
   homepage = "https://github.com/paketo-buildpacks/go-dist"
-  id = "paketo-buildpacks/go-dist-arm64"
+  id = "paketo-buildpacks/go-dist"
   keywords = ["go", "distribution", "compiler"]
   name = "Paketo Buildpack for Go Distribution"
   sbom-formats = ["application/vnd.cyclonedx+json", "application/spdx+json", "application/vnd.syft+json"]
